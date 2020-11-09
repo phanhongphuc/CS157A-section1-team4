@@ -10,7 +10,7 @@ body {
 
  header {
    background-color: black;
-   background-image: url("/img/Logo.jpg");
+   background-image: url("img/Features/Logo.jpg");
    background-size: 100%;
    background-position: center;
    height: 400px;
