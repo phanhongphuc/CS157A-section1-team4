@@ -88,7 +88,7 @@ try {
               <p><image height=100 src="<%=image%>" /></p>
               <p>
                 <a href="add.jsp?id=<%=productId%>" class="btn">
-                  <button type="button" class="btn btn-lg btn-block btn-primary">Add to card</button>
+                  <button type="button" class="btn btn-lg btn-block btn-primary">Add to cart</button>
                 </a>
               </p>
             </div>

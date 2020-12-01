@@ -44,7 +44,7 @@ if(session == null || name == null || !role.equals("admin")) {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cs157a?serverTimezone=EST5EDT",user, password);
             
             Statement stmt = con.createStatement();
-            String query = "DELETE FROM `order-up-groceries`.`vendor` WHERE (`vendorId` = '" + vendorId + "')";
+            String query = "DELETE FROM `order-up-groceries`.`vendor` WHERE (`id` = '" + vendorId + "')";
             stmt.executeUpdate(query);
             stmt.close();
             con.close();

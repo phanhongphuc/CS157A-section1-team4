@@ -50,7 +50,9 @@ if(session == null || name == null || !role.equals("admin")) {
             String query = "SELECT * FROM `order-up-groceries`.vendor WHERE id = " + Integer.parseInt(vendorId);
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-                vendorName = rs.getString(2);
+                vendorName = rs.getString("name");
+                phoneNumber = rs.getString("phone");
+                address = rs.getString("address");
             }
             rs.close();
             stmt.close();

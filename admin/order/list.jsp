@@ -29,6 +29,7 @@ if(session == null || name == null || !role.equals("admin")) {
   <div class="card mb-4 shadow-sm">
     <div class="card-header">
       <h2>Order List</h2>
+      <hr>
        <a href="../home.jsp" class="btn">
         <button type="button" class="btn btn-primary">Back to Homepage</button>
       </a>
