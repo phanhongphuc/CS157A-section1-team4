@@ -16,27 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `category`
+-- Table structure for table `order`
 --
 
-DROP TABLE IF EXISTS `category`;
+DROP TABLE IF EXISTS `order`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `category` (
-  `categoryId` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(1000) DEFAULT NULL,
-  PRIMARY KEY (`categoryId`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `order` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `date` varchar(45) DEFAULT NULL,
+  `total` varchar(45) DEFAULT NULL,
+  `address` varchar(45) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  `credit` varchar(45) DEFAULT NULL,
+  `expired` varchar(45) DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `category`
+-- Dumping data for table `order`
 --
 
-LOCK TABLES `category` WRITE;
-/*!40000 ALTER TABLE `category` DISABLE KEYS */;
-INSERT INTO `category` VALUES (11,'Meat'),(13,'Vegetable'),(14,'Fruit');
-/*!40000 ALTER TABLE `category` ENABLE KEYS */;
+LOCK TABLES `order` WRITE;
+/*!40000 ALTER TABLE `order` DISABLE KEYS */;
+INSERT INTO `order` VALUES (9,'2020/12/01 09:27:28','3200','50 Fremont St Suite 2240','Phuc Phan','1234567890123456','11/22','delivered'),(10,'2020/12/01 10:20:26','300','50 Fremont St Suite 2240','Phuc','12345678900987654','10/20','delivered');
+/*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -48,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-11-25 19:33:05
+-- Dump completed on 2020-12-01 10:23:44

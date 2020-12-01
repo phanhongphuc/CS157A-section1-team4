@@ -1,3 +1,10 @@
+<%
+String username = String.valueOf(session.getAttribute("username"));
+String userRole = String.valueOf(session.getAttribute("userRole"));
+if(session == null || username == null || !userRole.equals("admin")) {
+   response.sendRedirect("login.jsp");
+}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,14 +14,14 @@
   <script src="../js/bootstrap.min.js"></script>
 </head>
 <body>
-    <div id="nav-placeholder"></div>
-    <script>
-    $.get("./nav_admin.html", function(data){
-        $("#nav-placeholder").replaceWith(data);
-    });
-    </script>
     <div class="container">
-        <h1>Home</h1>
+        <h1>
+          Home
+          <div class="float-right float-bottom h6 mt-3">
+            Hi <%= username%>, <br>
+            <a href="logout.jsp">Log out</a>
+          </div>
+        </h1>
         <hr>
         <div class="container">
           <div class="card-deck mb-3 text-center">

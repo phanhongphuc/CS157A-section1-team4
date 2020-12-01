@@ -1,5 +1,4 @@
 <%@ page import="java.sql.*"%>
-
 <%
 String name = String.valueOf(session.getAttribute("username"));
 String role = String.valueOf(session.getAttribute("userRole"));
@@ -7,11 +6,10 @@ if(session == null || name == null || !role.equals("admin")) {
    response.sendRedirect("../login.jsp");
 }
 %>
-
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Order Up Groceries Admin - Category List</title>
+  <title>Order Up Groceries Admin - Product List</title>
   <link href="../../css/bootstrap.min.css" rel="stylesheet">
   <script src="../../js/jquery-1.10.2.js"></script>
   <script src="../../js/bootstrap.min.js"></script>
@@ -28,10 +26,10 @@ if(session == null || name == null || !role.equals("admin")) {
   
   <div class="card mb-4 shadow-sm">
     <div class="card-header">
-      <h2>Category List</h2>
+      <h2>Product List</h2>
       <hr>
       <a href="create.jsp" class="btn">
-        <button type="button" class="btn btn-primary">Category Create</button>
+        <button type="button" class="btn btn-primary">Product Create</button>
       </a>
        <a href="../home.jsp" class="btn">
         <button type="button" class="btn btn-primary">Back to Homepage</button>
@@ -44,12 +42,14 @@ if(session == null || name == null || !role.equals("admin")) {
           <tr>
             <td>Id</td>
             <td>Name</td>
+            <td>Price</td>
+            <td>Quantity</td>
+            <td>Image</td>
             <td>Action</td>
           </tr>
         <thead>
         <tbody>
       <%
-          String categoryName = request.getParameter("categoryName");
           String db = "cs157a";
           String user = "root";
           String password = "root";
@@ -59,17 +59,20 @@ if(session == null || name == null || !role.equals("admin")) {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cs157a?serverTimezone=EST5EDT",user, password);
             
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM `order-up-groceries`.category");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM `order-up-groceries`.product");
             while (rs.next()) {
       %>
               <tr>
-                <td> <%= rs.getInt(1) %></td>
-                <td> <%= rs.getString(2) %></td>
+                <td> <%= rs.getInt("id") %></td>
+                <td> <%= rs.getString("name") %></td>
+                <td> <%= rs.getString("price") %></td>
+                <td> <%= rs.getString("quantity") %></td>
+                <td> <image height=100 src="<%=rs.getString("image")%>" /></td>
                 <td>
-                  <a href="delete.jsp?categoryId=<%= rs.getInt(1) %>" class="btn confirmation">
+                  <a href="delete.jsp?productId=<%= rs.getInt(1) %>" class="btn confirmation">
                     <button type="button" class="btn btn-primary">Delete</button>
                   </a>
-                  <a href="edit.jsp?categoryId=<%= rs.getInt(1) %>" class="btn">
+                  <a href="edit.jsp?productId=<%= rs.getInt(1) %>" class="btn">
                     <button type="button" class="btn btn-primary">Edit</button>
                   </a>
                 </td>
@@ -90,7 +93,7 @@ if(session == null || name == null || !role.equals("admin")) {
 </div>
   <script type="text/javascript">
     $('.confirmation').on('click', function () {
-        return confirm('Are you sure to delete the category?');
+        return confirm('Are you sure to delete the product?');
     });
   </script>
 </body>

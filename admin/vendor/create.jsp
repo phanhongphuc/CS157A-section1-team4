@@ -11,7 +11,7 @@ if(session == null || name == null || !role.equals("admin")) {
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Order Up Groceries Admin - Category Delete</title>
+  <title>Order Up Groceries Admin - Vendor Create</title>
   <link href="../../css/bootstrap.min.css" rel="stylesheet">
   <script src="../../js/jquery-1.10.2.js"></script>
   <script src="../../js/bootstrap.min.js"></script>
@@ -29,12 +29,14 @@ if(session == null || name == null || !role.equals("admin")) {
   
   <div class="card mb-4 shadow-sm">
     <div class="card-header">
-      <h2>Category Delete</h2>
+      <h2>Vendor Create</h2>
     </div>
 
     <div class="card-body">
-      <% if(request.getParameter("categoryId") != null) {
-          String categoryId = request.getParameter("categoryId");
+      <% if(request.getParameter("vendorName") != null) {
+          String vendorName = request.getParameter("vendorName");
+          String phoneNumber = request.getParameter("phoneNumber");
+          String address = request.getParameter("address");
           String db = "cs157a";
           String user = "root";
           String password = "root";
@@ -44,7 +46,7 @@ if(session == null || name == null || !role.equals("admin")) {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cs157a?serverTimezone=EST5EDT",user, password);
             
             Statement stmt = con.createStatement();
-            String query = "DELETE FROM `order-up-groceries`.`category` WHERE (`categoryId` = '" + categoryId + "')";
+            String query = String.format("INSERT INTO `order-up-groceries`.vendor(`name`, `phone`, `address`) VALUES ('%s', '%s', '%s')", vendorName, phoneNumber, address);
             stmt.executeUpdate(query);
             stmt.close();
             con.close();
@@ -53,12 +55,29 @@ if(session == null || name == null || !role.equals("admin")) {
         }
       %>
         <div class="alert alert-primary" role="alert">
-          Category deleted
+          Vendor saved
         </div>
       <% } %>
-      <a href="list.jsp" class="btn">
-        <button type="button" class="btn btn-primary">Back to category list</button>
-      </a>
+      <form method="POST">
+        <div class="form-group">
+          <label for="vendorName">Vendor Name</label>
+          <input type="text" class="form-control" name="vendorName" placeholder="Enter vendor name" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone number</label>
+          <input type="text" class="form-control" name="phoneNumber" placeholder="Enter phone number" required>
+        </div>
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input type="text" class="form-control" name="address" placeholder="Enter address" required>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Create</button>
+          <a href="list.jsp" class="btn">
+            <button type="button" class="btn btn-primary">Back to vendor list</button>
+          </a>
+        </div>
+      </form>
     </div>
   </div>
   

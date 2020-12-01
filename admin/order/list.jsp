@@ -11,7 +11,7 @@ if(session == null || name == null || !role.equals("admin")) {
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Order Up Groceries Admin - Category List</title>
+  <title>Order Up Groceries Admin - Order List</title>
   <link href="../../css/bootstrap.min.css" rel="stylesheet">
   <script src="../../js/jquery-1.10.2.js"></script>
   <script src="../../js/bootstrap.min.js"></script>
@@ -28,11 +28,7 @@ if(session == null || name == null || !role.equals("admin")) {
   
   <div class="card mb-4 shadow-sm">
     <div class="card-header">
-      <h2>Category List</h2>
-      <hr>
-      <a href="create.jsp" class="btn">
-        <button type="button" class="btn btn-primary">Category Create</button>
-      </a>
+      <h2>Order List</h2>
        <a href="../home.jsp" class="btn">
         <button type="button" class="btn btn-primary">Back to Homepage</button>
       </a>
@@ -43,13 +39,17 @@ if(session == null || name == null || !role.equals("admin")) {
         <thead>
           <tr>
             <td>Id</td>
-            <td>Name</td>
+            <td>Customer</td>
+            <td>Date</td>
+            <td>Total</td>
+            <td>Shipping address</td>
+            <td>Status</td>
             <td>Action</td>
           </tr>
         <thead>
         <tbody>
       <%
-          String categoryName = request.getParameter("categoryName");
+          String orderName = request.getParameter("orderName");
           String db = "cs157a";
           String user = "root";
           String password = "root";
@@ -59,18 +59,20 @@ if(session == null || name == null || !role.equals("admin")) {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cs157a?serverTimezone=EST5EDT",user, password);
             
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM `order-up-groceries`.category");
+            String query = "SELECT * FROM `order-up-groceries`.`order`, `order-up-groceries`.`user`, `order-up-groceries`.`customerPlaceOrder` WHERE `order`.`id` = `customerPlaceOrder`.`orderId` AND `customerPlaceOrder`.`customerId` = `user`.`id`";
+            ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
       %>
               <tr>
-                <td> <%= rs.getInt(1) %></td>
-                <td> <%= rs.getString(2) %></td>
+                <td> <%= rs.getInt("orderId") %></td>
+                <td> <%= rs.getString("username") %></td>
+                <td> <%= rs.getString("date") %></td>
+                <td> $<%= rs.getString("total") %></td>
+                <td> <%= rs.getString("address") %></td>
+                <td> <%= rs.getString("status") %></td>
                 <td>
-                  <a href="delete.jsp?categoryId=<%= rs.getInt(1) %>" class="btn confirmation">
-                    <button type="button" class="btn btn-primary">Delete</button>
-                  </a>
-                  <a href="edit.jsp?categoryId=<%= rs.getInt(1) %>" class="btn">
-                    <button type="button" class="btn btn-primary">Edit</button>
+                  <a href="view.jsp?orderId=<%= rs.getInt("orderId") %>" class="btn">
+                    <button type="button" class="btn btn-primary">View</button>
                   </a>
                 </td>
               </tr>
@@ -88,10 +90,5 @@ if(session == null || name == null || !role.equals("admin")) {
     </div>
   </div>
 </div>
-  <script type="text/javascript">
-    $('.confirmation').on('click', function () {
-        return confirm('Are you sure to delete the category?');
-    });
-  </script>
 </body>
 </html>

@@ -1,4 +1,13 @@
 <%@ page import="java.sql.*"%>
+
+<%
+String name = String.valueOf(session.getAttribute("username"));
+String role = String.valueOf(session.getAttribute("userRole"));
+if(session == null || name == null || !role.equals("admin")) {
+   response.sendRedirect("../login.jsp");
+}
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +24,8 @@
       <h1>Order Up Groceries</h1>
     </div>
   </header>
+  
+  <%@include file="../menu.jsp" %>
   
   <div class="card mb-4 shadow-sm">
     <div class="card-header">

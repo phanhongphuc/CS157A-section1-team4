@@ -11,7 +11,7 @@ if(session == null || name == null || !role.equals("admin")) {
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Order Up Groceries Admin - Category List</title>
+  <title>Order Up Groceries Admin - Vendor List</title>
   <link href="../../css/bootstrap.min.css" rel="stylesheet">
   <script src="../../js/jquery-1.10.2.js"></script>
   <script src="../../js/bootstrap.min.js"></script>
@@ -28,10 +28,10 @@ if(session == null || name == null || !role.equals("admin")) {
   
   <div class="card mb-4 shadow-sm">
     <div class="card-header">
-      <h2>Category List</h2>
+      <h2>Vendor List</h2>
       <hr>
       <a href="create.jsp" class="btn">
-        <button type="button" class="btn btn-primary">Category Create</button>
+        <button type="button" class="btn btn-primary">Vendor Create</button>
       </a>
        <a href="../home.jsp" class="btn">
         <button type="button" class="btn btn-primary">Back to Homepage</button>
@@ -44,12 +44,14 @@ if(session == null || name == null || !role.equals("admin")) {
           <tr>
             <td>Id</td>
             <td>Name</td>
+            <td>Phone number</td>
+            <td>Address</td>
             <td>Action</td>
           </tr>
         <thead>
         <tbody>
       <%
-          String categoryName = request.getParameter("categoryName");
+          String vendorName = request.getParameter("vendorName");
           String db = "cs157a";
           String user = "root";
           String password = "root";
@@ -59,17 +61,19 @@ if(session == null || name == null || !role.equals("admin")) {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cs157a?serverTimezone=EST5EDT",user, password);
             
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM `order-up-groceries`.category");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM `order-up-groceries`.vendor");
             while (rs.next()) {
       %>
               <tr>
-                <td> <%= rs.getInt(1) %></td>
-                <td> <%= rs.getString(2) %></td>
+                <td> <%= rs.getInt("id") %></td>
+                <td> <%= rs.getString("name") %></td>
+                <td> <%= rs.getString("phone") %></td>
+                <td> <%= rs.getString("address") %></td>
                 <td>
-                  <a href="delete.jsp?categoryId=<%= rs.getInt(1) %>" class="btn confirmation">
+                  <a href="delete.jsp?vendorId=<%= rs.getInt(1) %>" class="btn confirmation">
                     <button type="button" class="btn btn-primary">Delete</button>
                   </a>
-                  <a href="edit.jsp?categoryId=<%= rs.getInt(1) %>" class="btn">
+                  <a href="edit.jsp?vendorId=<%= rs.getInt(1) %>" class="btn">
                     <button type="button" class="btn btn-primary">Edit</button>
                   </a>
                 </td>
@@ -90,7 +94,7 @@ if(session == null || name == null || !role.equals("admin")) {
 </div>
   <script type="text/javascript">
     $('.confirmation').on('click', function () {
-        return confirm('Are you sure to delete the category?');
+        return confirm('Are you sure to delete the vendor?');
     });
   </script>
 </body>

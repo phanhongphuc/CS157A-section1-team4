@@ -11,7 +11,7 @@ if(session == null || name == null || !role.equals("admin")) {
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Order Up Groceries Admin - Category Delete</title>
+  <title>Order Up Groceries Admin - Vendor Delete</title>
   <link href="../../css/bootstrap.min.css" rel="stylesheet">
   <script src="../../js/jquery-1.10.2.js"></script>
   <script src="../../js/bootstrap.min.js"></script>
@@ -29,12 +29,12 @@ if(session == null || name == null || !role.equals("admin")) {
   
   <div class="card mb-4 shadow-sm">
     <div class="card-header">
-      <h2>Category Delete</h2>
+      <h2>Vendor Delete</h2>
     </div>
 
     <div class="card-body">
-      <% if(request.getParameter("categoryId") != null) {
-          String categoryId = request.getParameter("categoryId");
+      <% if(request.getParameter("vendorId") != null) {
+          String vendorId = request.getParameter("vendorId");
           String db = "cs157a";
           String user = "root";
           String password = "root";
@@ -44,7 +44,7 @@ if(session == null || name == null || !role.equals("admin")) {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cs157a?serverTimezone=EST5EDT",user, password);
             
             Statement stmt = con.createStatement();
-            String query = "DELETE FROM `order-up-groceries`.`category` WHERE (`categoryId` = '" + categoryId + "')";
+            String query = "DELETE FROM `order-up-groceries`.`vendor` WHERE (`vendorId` = '" + vendorId + "')";
             stmt.executeUpdate(query);
             stmt.close();
             con.close();
@@ -53,11 +53,11 @@ if(session == null || name == null || !role.equals("admin")) {
         }
       %>
         <div class="alert alert-primary" role="alert">
-          Category deleted
+          Vendor deleted
         </div>
       <% } %>
       <a href="list.jsp" class="btn">
-        <button type="button" class="btn btn-primary">Back to category list</button>
+        <button type="button" class="btn btn-primary">Back to vendor list</button>
       </a>
     </div>
   </div>

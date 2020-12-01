@@ -11,7 +11,7 @@ if(session == null || name == null || !role.equals("admin")) {
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Order Up Groceries Admin - Category Edit</title>
+  <title>Order Up Groceries Admin - Vendor Edit</title>
   <link href="../../css/bootstrap.min.css" rel="stylesheet">
   <script src="../../js/jquery-1.10.2.js"></script>
   <script src="../../js/bootstrap.min.js"></script>
@@ -29,13 +29,15 @@ if(session == null || name == null || !role.equals("admin")) {
   
   <div class="card mb-4 shadow-sm">
     <div class="card-header">
-      <h2>Category Edit</h2>
+      <h2>Vendor Edit</h2>
     </div>
 
     <div class="card-body">
-      <% if(request.getParameter("categoryId") != null) {
-          String categoryId = request.getParameter("categoryId");
-          String categoryName = "";
+      <% if(request.getParameter("vendorId") != null) {
+          String vendorId = request.getParameter("vendorId");
+          String vendorName = "";
+          String phoneNumber = "";
+          String address = "";
           String db = "cs157a";
           String user = "root";
           String password = "root";
@@ -45,10 +47,10 @@ if(session == null || name == null || !role.equals("admin")) {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cs157a?serverTimezone=EST5EDT",user, password);
             
             Statement stmt = con.createStatement();
-            String query = "SELECT * FROM `order-up-groceries`.category WHERE categoryId = " + Integer.parseInt(categoryId);
+            String query = "SELECT * FROM `order-up-groceries`.vendor WHERE id = " + Integer.parseInt(vendorId);
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-                categoryName = rs.getString(2);
+                vendorName = rs.getString(2);
             }
             rs.close();
             stmt.close();
@@ -57,15 +59,17 @@ if(session == null || name == null || !role.equals("admin")) {
              out.println("SQLException caught: " + e.getMessage());
           }
       %>
-      <%  if(request.getParameter("categoryName") != null) { 
-            categoryName = request.getParameter("categoryName");
+      <%  if(request.getParameter("vendorName") != null) { 
+            vendorName = request.getParameter("vendorName");
+            phoneNumber = request.getParameter("phoneNumber");
+            address = request.getParameter("address");
             try {            
               java.sql.Connection con; 
               Class.forName("com.mysql.jdbc.Driver");
               con = DriverManager.getConnection("jdbc:mysql://localhost:3306/cs157a?serverTimezone=EST5EDT",user, password);
               
               Statement stmt = con.createStatement();
-              String query = "UPDATE `order-up-groceries`.category SET `name` = '" + categoryName + "' WHERE categoryId = " + Integer.parseInt(categoryId);;
+              String query = String.format("UPDATE `order-up-groceries`.vendor SET `name` = '%s', `phone` = '%s', `address` = '%s' WHERE id = %s", vendorName, phoneNumber, address, vendorId);
               stmt.executeUpdate(query);
               stmt.close();
               con.close();
@@ -73,18 +77,26 @@ if(session == null || name == null || !role.equals("admin")) {
               out.println("SQLException caught: " + e.getMessage());
             }
       %>
-        <div class="alert alert-primary" role="alert"> Category saved </div>
+        <div class="alert alert-primary" role="alert"> Vendor saved </div>
       <% } %>
 
       <form method="POST">
         <div class="form-group">
-          <label for="categoryName">Category Name</label>
-          <input type="text" class="form-control" name="categoryName" value="<%=categoryName%>" placeholder="Enter category name" required>
+          <label for="vendorName">Vendor Name</label>
+          <input type="text" class="form-control" name="vendorName" value="<%=vendorName%>" placeholder="Enter vendor name" required>
+        </div>
+        <div class="form-group">
+          <label for="phoneNumber">Phone Number</label>
+          <input type="text" class="form-control" name="phoneNumber" value="<%=phoneNumber%>" placeholder="Enter phone number" required>
+        </div>
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input type="text" class="form-control" name="address" value="<%=address%>" placeholder="Enter address" required>
         </div>
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Edit</button>
           <a href="list.jsp" class="btn">
-            <button type="button" class="btn btn-primary">Back to category list</button>
+            <button type="button" class="btn btn-primary">Back to vendor list</button>
           </a>
         </div>
       </form>
